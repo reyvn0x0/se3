@@ -4,7 +4,7 @@ from datetime import timedelta
 class Config:
     # Database Configuration für MySQL
     MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
-    MYSQL_USER = os.environ.get('MYSQL_USER', 'root')
+    MYSQL_USER = os.environ.get('MYSQL_USER', 'stundenplan_user')
     MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'RM1337ftw')
     MYSQL_DB = os.environ.get('MYSQL_DB', 'stundenplan_db')
     
