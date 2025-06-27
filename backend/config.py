@@ -5,7 +5,7 @@ class Config:
     # Database Configuration für MySQL
     MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
     MYSQL_USER = os.environ.get('MYSQL_USER', 'root')
-    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'password')
+    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'RM1337ftw')
     MYSQL_DB = os.environ.get('MYSQL_DB', 'stundenplan_db')
     
     # SQLAlchemy Configuration mit PyMySQL (vermeidet mysqlclient-Probleme)
