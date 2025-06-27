@@ -1,6 +1,6 @@
-# 🎓 Stundenplan Backend API
 
-## 🚀 Quick Start
+
+##  Quick Start
 
 ### Mit Docker (Empfohlen)
 ```bash
