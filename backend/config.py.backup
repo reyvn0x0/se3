@@ -1,0 +1,94 @@
+import os
+from datetime import timedelta
+
+class Config:
+    # MySQL Database Configuration
+    MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
+    MYSQL_PORT = os.environ.get('MYSQL_PORT', '3306')
+    MYSQL_USER = os.environ.get('MYSQL_USER', 'stundenplan_user')
+    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'stundenplan123')
+    MYSQL_DB = os.environ.get('MYSQL_DB', 'stundenplan_db')
+    
+    # Database URI mit PyMySQL-Connector
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?charset=utf8mb4"
+    
+    # Alternative Connectors (auskommentiert):
+    # mysql-connector-python:
+    # SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?charset=utf8mb4"
+    
+    # mysqlclient (schneller, aber Build-Tools erforderlich):
+    # SQLALCHEMY_DATABASE_URI = f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?charset=utf8mb4"
+    
+    # SQLAlchemy Configuration
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_pre_ping': True,          # Verbindung vor Verwendung testen
+        'pool_recycle': 300,            # Verbindungen nach 5 Min erneuern
+        'pool_timeout': 20,             # 20 Sek Timeout für Verbindungsaufbau
+        'max_overflow': 0,              # Keine zusätzlichen Verbindungen
+        'echo': False                   # SQL-Queries nicht loggen (in Production)
+    }
+    
+    # Security Configuration
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'stundenplan-secret-key-2024')
+    
+    # JWT Configuration
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'jwt-secret-key-2024')
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
+    JWT_ALGORITHM = 'HS256'
+    
+    # CORS Configuration für React Frontend
+    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
+    
+    # Upload Configuration
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', 'uploads')
+    MAX_CONTENT_LENGTH = int(os.environ.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024))  # 16MB
+    
+    # Flask Configuration
+    DEBUG = os.environ.get('FLASK_DEBUG', 'True').lower() == 'true'
+    TESTING = False
+    
+    # Timezone Configuration
+    TIMEZONE = os.environ.get('TZ', 'Europe/Berlin')
+    
+    # Logging Configuration
+    LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
+    
+    @staticmethod
+    def init_app(app):
+        """Initialize application with this config"""
+        pass
+
+class DevelopmentConfig(Config):
+    """Development configuration"""
+    DEBUG = True
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        **Config.SQLALCHEMY_ENGINE_OPTIONS,
+        'echo': True  # SQL-Queries in Development loggen
+    }
+
+class ProductionConfig(Config):
+    """Production configuration"""
+    DEBUG = False
+    TESTING = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        **Config.SQLALCHEMY_ENGINE_OPTIONS,
+        'pool_size': 10,        # Mehr Verbindungen in Production
+        'max_overflow': 20,     # Overflow erlauben
+        'echo': False
+    }
+
+class TestingConfig(Config):
+    """Testing configuration"""
+    TESTING = True
+    # Separate Test-Datenbank
+    MYSQL_DB_TEST = os.environ.get('MYSQL_DB_TEST', 'stundenplan_test_db')
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{Config.MYSQL_USER}:{Config.MYSQL_PASSWORD}@{Config.MYSQL_HOST}:{Config.MYSQL_PORT}/{MYSQL_DB_TEST}?charset=utf8mb4"
+
+# Configuration mapping
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'testing': TestingConfig,
+    'default': DevelopmentConfig
+}
