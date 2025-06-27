@@ -1,0 +1,9 @@
+# IDEs
+.vscode
+.idea
+
+# Node.js dependencies
+node_modules
+
+# Python Cache
+__pycache__

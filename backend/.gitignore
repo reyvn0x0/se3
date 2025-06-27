@@ -1,0 +1,64 @@
+# Python spezifisch
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+build/
+dist/
+__pypackages__/
+
+# Virtuelle Umgebung (falls verwendet)
+venv/
+.venv/
+env/
+envs/
+
+# IDE-spezifische Dateien (ähnlich wie im Original für JetBrains)
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# VS Code spezifisch (beliebte Wahl für Python und Web)
+.vscode/
+
+node_modules
+dist/
+build/
+*.map
+
+# Logs (ähnlich wie im Original)
+*.log
+
+# macOS spezifisch (ähnlich wie im Original)
+.DS_Store
+._*
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Datenbanken (falls lokal verwendet)
+*.sqlite
+instance/
+
+# Temporäre Dateien
+*.tmp
+*.swp
+
+# Zusätzliche, falls du sie hast
+.mypy_cache/
+.dmypy_cache/
+.ruff_cache/
