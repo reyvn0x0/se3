@@ -7,8 +7,16 @@ Flask-SQLAlchemy==3.0.5
 SQLAlchemy==1.4.46
 PyMySQL==1.0.3
 
+# Authentication & Security
+Flask-JWT-Extended==4.5.3
+bcrypt==4.0.1
+
 # CORS Support für React Frontend
 Flask-CORS==4.0.0
+
+# File Processing für Import/Export
+openpyxl==3.1.2
+pandas==2.0.3
 
 # Environment Variables
 python-dotenv==1.0.0
@@ -18,3 +26,6 @@ typing-extensions==4.8.0
 
 # Development
 flask-shell-ipython==1.4.0
+
+# Production Server (optional)
+gunicorn==21.2.0
