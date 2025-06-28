@@ -17,34 +17,13 @@ def create_app():
     # CORS für React Frontend
     CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000'])
     
-    # API Blueprints (nur die, die wir brauchen)
-    try:
-        from app.api_routes import api as api_blueprint
-        app.register_blueprint(api_blueprint, url_prefix='/api')
-        print("✅ API Routes geladen")
-    except ImportError as e:
-        print(f"⚠️  API Routes nicht gefunden: {e}")
-        # Fallback: Basic Route direkt in der App
-        @app.route('/api/health')
-        def health():
-            return jsonify({'status': 'healthy', 'message': 'Backend läuft'})
+    # Blueprints registrieren
+    from app.routes import main as main_blueprint
+    app.register_blueprint(main_blueprint)
     
-    # Optional: Bestehende routes NUR wenn sie funktionieren
-    try:
-        from app.routes import main as main_blueprint
-        app.register_blueprint(main_blueprint)
-        print("✅ Main Routes geladen")
-    except ImportError as e:
-        print(f"⚠️  Main Routes übersprungen: {e}")
-        # Fallback: Basic Routes direkt in der App
-        @app.route('/degree_programs')
-        def degree_programs():
-            return jsonify({
-                'degree_programs': [
-                    {'id': 1, 'name': 'Informatik'},
-                    {'id': 2, 'name': 'Wirtschaftsinformatik'}
-                ]
-            })
+    # API Blueprints
+    from app.api_routes import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/api')
     
     # Error Handler für 404
     @app.errorhandler(404)

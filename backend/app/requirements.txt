@@ -1,0 +1,20 @@
+# Flask Core
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Database - Kompatible Versionen
+Flask-SQLAlchemy==3.0.5
+SQLAlchemy==1.4.46
+PyMySQL==1.0.3
+
+# CORS Support für React Frontend
+Flask-CORS==4.0.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Typing Extensions für Kompatibilität
+typing-extensions==4.8.0
+
+# Development
+flask-shell-ipython==1.4.0
